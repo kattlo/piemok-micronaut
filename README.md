@@ -1,16 +1,57 @@
-## Micronaut 2.4.2 Documentation
+## 🥧 Piemok Micronaut
 
-- [User Guide](https://docs.micronaut.io/2.4.2/guide/index.html)
-- [API Reference](https://docs.micronaut.io/2.4.2/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/2.4.2/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+Convenience lib to use Piemok within Micronaut projects.
 
-## Feature kafka documentation
+- [See Piemok](https://github.com/kattlo/piemok)
 
-- [Micronaut Kafka Messaging documentation](https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html)
+__Support:__
 
-## Feature http-client documentation
+- Java 11+
+- Apache Kafka® 2.6.0+
+- Micronaut
+- Consuming by Subscription
 
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+## Getting Started
 
+1. Dependency
+
+  - Gradle
+    ```groovy
+    repositories {
+        // ...
+
+        maven {
+            url = uri('http://packages.confluent.io/maven/')
+        }
+
+        maven { url 'https://jitpack.io' }
+    }
+
+    dependencies {
+	    testImplementation 'com.github.kattlo:piemok-micronaut:v0.1.0'
+	}
+
+    ```
+
+  - Apache Maven®
+    ```xml
+    <repositories>
+		<repository>
+		    <id>confluent</id>
+		    <url>http://packages.confluent.io/maven/</url>
+		</repository>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
+	<dependency>
+        <scope>test</scope>
+	    <groupId>com.github.kattlo</groupId>
+	    <artifactId>piemok-micronaut</artifactId>
+	    <version>v0.1.0</version>
+	</dependency>
+    ```
+
+  - [See other options](https://jitpack.io/#kattlo/piemok-micronaut)
