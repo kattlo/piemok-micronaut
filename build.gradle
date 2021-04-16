@@ -1,10 +1,14 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.4.2"
+
+    id("java-library")
+    id("maven")
 }
 
 version = "0.1.0"
 group = "com.github.kattlo"
+description = "Piemok for Micronaut"
 
 repositories {
     mavenCentral()
@@ -47,5 +51,32 @@ java {
     targetCompatibility = JavaVersion.toVersion("11")
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+install {
+  repositories.mavenInstaller {
+    pom.project {
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'repo'
+        }
+      }
+    }
+  }
+}
 
