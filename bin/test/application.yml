@@ -1,0 +1,13 @@
+micronaut:
+  application:
+    name: piemok
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  producers:
+    default:
+      retries: 5
+   
+
+
