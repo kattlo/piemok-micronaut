@@ -98,9 +98,8 @@ class MyTest {
         var consumer = factory.consumerOf("micronaut");
         var expected = "A Value";
 
-        consumer.ifPresent(c -> {
-            c.reset("test", null, expected);
-        });
+        consumer.ifPresent(c ->
+            c.reset("test", null, expected));
 
         /* Tip: perform some sleep and the listener will have time to consume
          * and process
