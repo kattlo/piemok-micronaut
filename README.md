@@ -28,7 +28,7 @@ __Support:__
     }
 
     dependencies {
-	    testImplementation("com.github.kattlo:piemok-micronaut:v0.4.0"){
+	    testImplementation("com.github.kattlo:piemok-micronaut:v0.5.0"){
             exclude group:'io.micronaut', module:'micronaut-bom'
         }
 	}
@@ -52,7 +52,7 @@ __Support:__
         <scope>test</scope>
 	    <groupId>com.github.kattlo</groupId>
 	    <artifactId>piemok-micronaut</artifactId>
-	    <version>v0.4.0</version>
+	    <version>v0.5.0</version>
         <exclusions>
           <exclusion>
             <groupId>io.micronaut</groupId>
