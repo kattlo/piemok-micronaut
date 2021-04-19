@@ -106,7 +106,7 @@ class MyTest {
          */
         Thread.sleep(Duration.ofSeconds(3).toMillis());
 
-        // do your assertions
+        // TODO do your assertions
     }
 }
 ```
@@ -156,6 +156,101 @@ public class MockedKafkaProducerFactoryTest {
 
 ### Usage with Kotlin
 
+__Consumer__
+
 ```kotlin
+import io.micronaut.runtime.EmbeddedApplication
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Test
+import javax.inject.Inject
+
+import io.github.kattlo.piemok.micronaut.MockedKafkaConsumerFactory
+
+@MicronautTest
+class ConsumerExemploTest {
+
+    @Inject
+    lateinit var application: EmbeddedApplication<*>
+
+    @Inject
+    lateinit var factory: MockedKafkaConsumerFactory
+
+    @Throws(Exception::class)
+    @Test
+    fun should_run_against_the_mocked_consumer() {
+
+        val expected = "A Value"
+
+        factory.consumerOf<String, String>("micronaut")
+            .ifPresent({c -> c.reset("test", null, expected)});
+
+        /* Tip: perform some sleep and the listener will have time to consume
+         * and process
+         */
+        Thread.sleep(Duration.ofSeconds(3).toMillis())
+
+        // TODO do your assertions
+    }
+}
+```
+
+__Producer__
+
+```kotlin
+package com.example
+
+import io.micronaut.runtime.EmbeddedApplication
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.apache.kafka.clients.producer.MockProducer
+import javax.inject.Inject
+
+import io.github.kattlo.piemok.micronaut.MockedKafkaProducerFactory
+import java.util.Optional
+
+import io.micronaut.configuration.kafka.annotation.KafkaClient
+import io.micronaut.configuration.kafka.annotation.Topic
+
+@KafkaClient
+interface ProducerExemplo {
+
+    @Topic("test")
+    fun send(value: String)
+
+}
+
+@MicronautTest
+class ProducerExemploTest {
+
+    @Inject
+    lateinit var application: EmbeddedApplication<*>
+
+    @Inject
+    lateinit var factory: MockedKafkaProducerFactory
+
+    @Inject
+    lateinit var producer: ProducerExemplo
+
+    @Test
+    fun testItWorks() {
+        Assertions.assertTrue(application.isRunning)
+    }
+
+    @Test
+    fun should_run_against_the_mocked_producer() {
+
+        val expected = "Test 1"
+        producer.send(expected)
+
+        val mocked : Optional<MockProducer<String, String>> = factory.producer()
+
+        val records = mocked.get().history();
+        Assertions.assertEquals(1, records.size);
+
+        val actual = records.iterator().next();
+        Assertions.assertEquals(expected, actual.value())
+    }
+}
 
 ```
